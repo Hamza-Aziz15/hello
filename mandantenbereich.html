@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandantenbereich | Barbara Hermann Steuerberatung GbR</title>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="fevicon.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .mandanten-section {
+            margin-bottom: 3.5rem;
+        }
+        .mandanten-section h3 {
+            color: #0d1b4b;
+            font-size: 1.25rem;
+            border-bottom: 2px solid #0d1b4b;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Search Area */
+        .search-area {
+            background: #f5f5f0;
+            padding: 1.2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .search-area select, .search-area input {
+            padding: 0.6rem;
+            border: 1px solid #c8cdd6;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .search-area select {
+            flex: 1;
+            min-width: 200px;
+        }
+        .search-area .search-input-wrapper {
+            position: relative;
+            flex: 2;
+            min-width: 250px;
+        }
+        .search-area input {
+            width: 100%;
+            padding-right: 2.5rem;
+        }
+        .search-area .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #0d1b4b;
+            font-size: 1.1rem;
+        }
+
+        /* Leaflet List */
+        .leaflet-list {
+            list-style: none;
+            padding: 0;
+            border-top: 1px solid #eee;
+        }
+        .leaflet-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.92rem;
+        }
+        .leaflet-item a {
+            color: #0d1b4b;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .leaflet-item a:hover {
+            text-decoration: underline;
+        }
+        .leaflet-date {
+            color: #777;
+            font-size: 0.85rem;
+        }
+
+        /* Steuertermine */
+        .termine-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .termine-month h4 {
+            color: #0d1b4b;
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid #0d1b4b;
+        }
+        .termin-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px dotted #ccc;
+        }
+        .termin-date {
+            font-weight: 700;
+            color: #0d1b4b;
+        }
+
+        /* News Feed */
+        .news-feed {
+            margin-top: 2rem;
+        }
+        .news-item {
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid #f5f5f0;
+        }
+        .news-item:hover {
+            border-left-color: #0d1b4b;
+        }
+        .news-item h5 {
+            color: #0d1b4b;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .news-item p {
+            font-size: 0.88rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+        .news-item a.read-more {
+            color: #0d1b4b;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .disclaimer-small {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #fdfdfd;
+            border: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .termine-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-block">
+                <div class="logo-title">Barbara Hermann</div>
+                <div class="logo-subtitle">Steuerberatung GbR</div>
+            </div>
+            
+            <div class="mobile-menu-btn" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-links" id="nav-links">
+                <li class="nav-item has-dropdown">
+                    <a href="index.html" class="nav-link">Home <span class="arrow">▾</span></a>
+                    <ul class="dropdown">
+                        <li><a href="kontakt.html">Kontakt</a></li>
+                        <li><a href="fakten.html">Fakten</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="kanzleileitung.html" class="nav-link">Kanzleileitung <span class="arrow">▾</span></a>
+                    <ul class="dropdown">
+                        <li><a href="vita.html">Vita</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="kanzlei.html" class="nav-link">Kanzlei <span class="arrow">▾</span></a>
+                    <ul class="dropdown">
+                        <li><a href="team.html">Das Team</a></li>
+                        <li><a href="kooperationen.html">Kooperationen</a></li>
+                        <li><a href="mitgliedschaften.html">Mitgliedschaften</a></li>
+                        <li><a href="wir-stellen-ein.html">Wir stellen ein</a></li>
+                        <li><a href="engagement.html">Gemeinnütziges Engagement</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="mandantenbereich.html" class="nav-link">Mandantenbereich</a>
+                </li>
+                <li class="nav-item">
+                    <a href="digitalisierung.html" class="nav-link">Digitalisierung</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PAGE BANNER -->
+        <!-- PAGE BANNER -->
+        <!-- PAGE BANNER -->
+        <header class="page-banner">
+            <div class="banner-content">
+                <h1>Mandantenbereich</h1>
+                <p>Barbara Hermann Steuerberatung GbR</p>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <div class="layout-container">
+            <!-- LEFT CONTENT -->
+            <main class="main-content">
+                
+                <!-- HEADER INFO -->
+                <div class="mandanten-intro" style="margin-bottom: 2.5rem;">
+                    <h2 class="section-heading-band">Aktuelle Informationen</h2>
+                    <p style="font-weight: 700; color: #0d1b4b; font-size: 1.1rem; margin-top: 1rem;">Aktuelle Informationen aus dem Steuerrecht und dem Wirtschaftsrecht</p>
+                    <p style="font-size: 0.9rem; color: #666; font-style: italic;">von Fachverlagen</p>
+                </div>
+
+                <!-- SECTION: MERKBLÄTTER -->
+                <section class="mandanten-section">
+                    <h3>Mandantenmerkblätter</h3>
+                    
+                    <div class="search-area">
+                        <select>
+                            <option>alle Zielgruppen</option>
+                            <option>Arbeitgeber / Arbeitnehmer</option>
+                            <option>GmbH-Gesellschafter / Geschäftsführer</option>
+                            <option>Hauseigentümer</option>
+                            <option>Kapitalanleger</option>
+                            <option>Unternehmer / Freiberufler</option>
+                        </select>
+                        <div class="search-input-wrapper">
+                            <input type="text" placeholder="Suchbegriff">
+                            <span class="search-icon">🔍</span>
+                        </div>
+                    </div>
+
+                    <ul class="leaflet-list">
+                        <li class="leaflet-item">
+                            <a href="#">Beschäftigung von Studenten und Praktikanten</a>
+                            <span class="leaflet-date">August 2025</span>
+                        </li>
+                        <li class="leaflet-item">
+                            <a href="#">Die E-Rechnung – Verpflichtung ab 2025</a>
+                            <span class="leaflet-date">Juli 2025</span>
+                        </li>
+                        <li class="leaflet-item">
+                            <a href="#">Reisekosten im betrieblichen Bereich</a>
+                            <span class="leaflet-date">Juni 2025</span>
+                        </li>
+                        <li class="leaflet-item">
+                            <a href="#">Bewirtung von Geschäftspartnern</a>
+                            <span class="leaflet-date">Mai 2025</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- SECTION: MANDANTENINFORMATION -->
+                <section class="mandanten-section">
+                    <h3>Mandanteninformation</h3>
+
+                    <div class="termine-grid">
+                        <!-- Termine Current Month -->
+                        <div class="termine-month">
+                            <h4>Steuertermine September 2025</h4>
+                            <div class="termin-item">
+                                <span>Lohnsteuer</span>
+                                <span class="termin-date">10.09.2025</span>
+                            </div>
+                            <div class="termin-item">
+                                <span>Umsatzsteuer</span>
+                                <span class="termin-date">10.09.2025</span>
+                            </div>
+                            <div class="termin-item">
+                                <span>Einkommensteuer</span>
+                                <span class="termin-date">10.09.2025</span>
+                            </div>
+                            <div class="termin-item">
+                                <span>Körperschaftsteuer</span>
+                                <span class="termin-date">10.09.2025</span>
+                            </div>
+                        </div>
+
+                        <!-- Termine Next Month -->
+                        <div class="termine-month">
+                            <h4>Steuertermine Oktober 2025</h4>
+                            <div class="termin-item">
+                                <span>Lohnsteuer</span>
+                                <span class="termin-date">10.10.2025</span>
+                            </div>
+                            <div class="termin-item">
+                                <span>Umsatzsteuer</span>
+                                <span class="termin-date">10.10.2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="news-feed">
+                        <h4 style="color: #0d1b4b; font-size: 1.05rem; margin-bottom: 1.5rem; text-decoration: underline;">Aktuelle Steuernachrichten</h4>
+                        
+                        <div class="news-item">
+                            <h5>Werbungskostenabzug beim Arbeitszimmer: Neue BFH-Urteile</h5>
+                            <p>Der Bundesfinanzhof hat seine Rechtsprechung zur Abziehbarkeit von Aufwendungen für ein häusliches Arbeitszimmer präzisiert...</p>
+                            <a href="#" class="read-more">weiter</a>
+                        </div>
+
+                        <div class="news-item">
+                            <h5>Fahrtenbuch vs. 1%-Regelung bei Elektrofahrzeugen</h5>
+                            <p>Bei der Besteuerung der privaten Nutzung von Elektro-Dienstwagen gibt es wichtige Neuerungen hinsichtlich der Bruttolistenpreise...</p>
+                            <a href="#" class="read-more">weiter</a>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="disclaimer-small">
+                    Für die Vollständigkeit und Richtigkeit der bereitgestellten Informationen kann keine persönliche Verantwortung übernommen werden. Bitte konsultieren Sie uns für eine individuelle Beratung.
+                </div>
+
+            </main>
+
+            <!-- RIGHT SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Öffnungszeiten</h4>
+                    <div class="opening-hours">
+                        <div class="hours-row">
+                            <span>Mo.–Fr.</span>
+                            <span>08:00–16:30</span>
+                        </div>
+                        <div class="hours-row">
+                            <span>Sa.</span>
+                            <span>Geschlossen</span>
+                        </div>
+                        <div class="hours-row">
+                            <span>So.</span>
+                            <span>Geschlossen</span>
+                        </div>
+                        <p class="holiday-note">Feiertage ausgeschlossen</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-logos">
+                    <img src="datev.png" alt="DATEV Mitglied">
+                    <img src="stbv.png" alt="StBV Hessen">
+                    <img src="stbk.png" alt="StBK Hessen">
+                    <p style="font-size: 0.74rem; color: #555; text-align: center; margin-top: 0.5rem;">Mitglied des Steuerberaterverbands Hessen</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-left">
+            Bad Salzschlirf / Fulda / Alsfeld · 06.09.2025
+        </div>
+        <div class="footer-right">
+            <a href="impressum.html">Impressum</a>
+            <a href="datenschutz.html">Datenschutz</a>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
