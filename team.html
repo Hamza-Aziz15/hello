@@ -17,12 +17,18 @@
             margin-top: 1.5rem;
         }
         .team-member {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
             border-bottom: 1px solid #e0e0e0;
         }
         .team-member:last-child {
             border-bottom: none;
+        }
+        .member-details {
+            flex: 1;
         }
         .member-name {
             font-weight: 700;
@@ -37,6 +43,19 @@
         }
         .member-info span {
             display: block;
+        }
+        .member-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 2rem;
+            border: 2px solid #f0f0f0;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .team-member:hover .member-photo {
+            transform: scale(1.1);
         }
         .emeriti-section {
             margin-top: 3rem;
@@ -125,125 +144,164 @@
                 <div class="team-list">
                     <!-- Roland Dietz -->
                     <div class="team-member">
-                        <div class="member-name">Roland Dietz</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachangestellter</span>
-                            <span>Standort: Bad Salzschlirf</span>
-                            <span>Eintritt: 1991</span>
+                        <div class="member-details">
+                            <div class="member-name">Roland Dietz</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachangestellter</span>
+                                <span>Standort: Bad Salzschlirf</span>
+                                <span>Eintritt: 1991</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Roland Dietz" class="member-photo">
                     </div>
 
                     <!-- Ina Sperling -->
                     <div class="team-member">
-                        <div class="member-name">Ina Sperling</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachwirtin</span>
-                            <span>Standort: Fulda</span>
-                            <span>Eintritt: 2011</span>
+                        <div class="member-details">
+                            <div class="member-name">Ina Sperling</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachwirtin</span>
+                                <span>Standort: Fulda</span>
+                                <span>Eintritt: 2011</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Ina Sperling" class="member-photo">
                     </div>
 
                     <!-- Jutta Georg -->
                     <div class="team-member">
-                        <div class="member-name">Jutta Georg</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachwirtin</span>
-                            <span>Standort: Alsfeld</span>
-                            <span>Ehemals Sozietät Schornstein</span>
+                        <div class="member-details">
+                            <div class="member-name">Jutta Georg</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachwirtin</span>
+                                <span>Standort: Alsfeld</span>
+                                <span>Ehemals Sozietät Schornstein</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Jutta Georg" class="member-photo">
                     </div>
 
                     <!-- Andrea Müller -->
                     <div class="team-member">
-                        <div class="member-name">Andrea Müller</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachwirtin</span>
-                            <span>Standort: Alsfeld</span>
-                            <span>Ehemals Sozietät Schornstein</span>
+                        <div class="member-details">
+                            <div class="member-name">Andrea Müller</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachwirtin</span>
+                                <span>Standort: Alsfeld</span>
+                                <span>Ehemals Sozietät Schornstein</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Andrea Müller" class="member-photo">
                     </div>
 
                     <!-- Ilona Krug -->
                     <div class="team-member">
-                        <div class="member-name">Ilona Krug</div>
-                        <div class="member-info">
-                            <span>Position: Industriekauffrau</span>
-                            <span>Standort: Alsfeld</span>
-                            <span>Ehemals Sozietät Schornstein</span>
+                        <div class="member-details">
+                            <div class="member-name">Ilona Krug</div>
+                            <div class="member-info">
+                                <span>Position: Industriekauffrau</span>
+                                <span>Standort: Alsfeld</span>
+                                <span>Ehemals Sozietät Schornstein</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Ilona Krug" class="member-photo">
                     </div>
 
                     <!-- Burkardt Barth -->
                     <div class="team-member">
-                        <div class="member-name">Burkardt Barth</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachangestellter</span>
-                            <span>Standort: Alsfeld</span>
+                        <div class="member-details">
+                            <div class="member-name">Burkardt Barth</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachangestellter</span>
+                                <span>Standort: Alsfeld</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Burkardt Barth" class="member-photo">
                     </div>
 
                     <!-- Birgit Merle -->
                     <div class="team-member">
-                        <div class="member-name">Birgit Merle</div>
-                        <div class="member-info">
-                            <span>Position: Buchhalterin</span>
-                            <span>Standort: Alsfeld</span>
-                            <span>Ehemals Sozietät Schornstein</span>
+                        <div class="member-details">
+                            <div class="member-name">Birgit Merle</div>
+                            <div class="member-info">
+                                <span>Position: Buchhalterin</span>
+                                <span>Standort: Alsfeld</span>
+                                <span>Ehemals Sozietät Schornstein</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Birgit Merle" class="member-photo">
                     </div>
 
                     <!-- Maryna Möltgen -->
                     <div class="team-member">
-                        <div class="member-name">Maryna Möltgen</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachangestellte, Betriebswirtin</span>
-                            <span>Standort: Fulda</span>
+                        <div class="member-details">
+                            <div class="member-name">Maryna Möltgen</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachangestellte, Betriebswirtin</span>
+                                <span>Standort: Fulda</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Maryna Möltgen" class="member-photo">
                     </div>
 
                     <!-- Kevin Zafar -->
                     <div class="team-member">
-                        <div class="member-name">Kevin Zafar</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachangestellter (Auszubildender)</span>
-                            <span>Standort: Fulda</span>
+                        <div class="member-details">
+                            <div class="member-name">Kevin Zafar</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachangestellter (Auszubildender)</span>
+                                <span>Standort: Fulda</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Kevin Zafar" class="member-photo">
                     </div>
 
                     <!-- Svetlana Samiguilina -->
                     <div class="team-member">
-                        <div class="member-name">Svetlana Samiguilina</div>
-                        <div class="member-info">
-                            <span>Position: Lohnbuchhalterin</span>
-                            <span>Standort: Fulda</span>
+                        <div class="member-details">
+                            <div class="member-name">Svetlana Samiguilina</div>
+                            <div class="member-info">
+                                <span>Position: Lohnbuchhalterin</span>
+                                <span>Standort: Fulda</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Svetlana Samiguilina" class="member-photo">
                     </div>
 
                     <!-- Sara Karakus -->
                     <div class="team-member">
-                        <div class="member-name">Sara Karakus</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachangestellt Lohnbuchhalterin</span>
-                            <span>Standort: Fulda</span>
+                        <div class="member-details">
+                            <div class="member-name">Sara Karakus</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachangestellt Lohnbuchhalterin</span>
+                                <span>Standort: Fulda</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Sara Karakus" class="member-photo">
                     </div>
 
                     <!-- Manuela Webersinke -->
                     <div class="team-member">
-                        <div class="member-name">Manuela Webersinke</div>
-                        <div class="member-info">
-                            <span>Position: Steuerfachwirtin, Juristin</span>
-                            <span>Standort: Fulda</span>
+                        <div class="member-details">
+                            <div class="member-name">Manuela Webersinke</div>
+                            <div class="member-info">
+                                <span>Position: Steuerfachwirtin, Juristin</span>
+                                <span>Standort: Fulda</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Manuela Webersinke" class="member-photo">
                     </div>
 
                     <!-- Lidia Pfannenstiel -->
                     <div class="team-member">
-                        <div class="member-name">Lidia Pfannenstiel</div>
-                        <div class="member-info">
-                            <span>Position: Steurfachwirtin</span>
-                            <span>Standort: Fulda</span>
+                        <div class="member-details">
+                            <div class="member-name">Lidia Pfannenstiel</div>
+                            <div class="member-info">
+                                <span>Position: Steurfachwirtin</span>
+                                <span>Standort: Fulda</span>
+                            </div>
                         </div>
+                        <img src="fevicon.png" alt="Lidia Pfannenstiel" class="member-photo">
                     </div>
                 </div>
 

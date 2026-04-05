@@ -1,4 +1,7 @@
-/* GLOBAL STYLES */
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +13,13 @@ body {
     background-color: #f5f5f0;
     color: #1a1a2e;
     line-height: 1.6;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+body.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 a {
@@ -26,6 +36,11 @@ a {
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: box-shadow 0.3s ease;
+}
+
+.navbar.scrolled {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .nav-container {
@@ -388,10 +403,80 @@ a {
     line-height: 1.85;
 }
 
-/* MOBILE RESPONSIVENESS */
+/* ==========================================================================
+   TIMELINE & GRID COMPONENTS (Global)
+   ========================================================================== */
+
+/* Timeline Table (Vita) */
+.timeline-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    font-size: 0.88rem;
+    color: #333;
+}
+
+.timeline-table td {
+    padding: 0.8rem 0;
+    vertical-align: top;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.timeline-date {
+    width: 120px;
+    font-weight: 700;
+    color: #0d1b4b;
+    padding-right: 1.5rem !important;
+}
+
+.timeline-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Benefits Grid (Jobs) */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 2rem;
+    font-size: 0.88rem;
+    color: #333;
+}
+
+.benefit-item {
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.benefit-item::before {
+    content: "✓";
+    color: #0d1b4b;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* MOBILE RESPONSIVENESS (max-width: 768px) */
 @media (max-width: 768px) {
+    /* NAVBAR */
     .navbar {
         padding: 0 1rem;
+        height: 60px;
+    }
+
+    .nav-container {
+        justify-content: space-between;
+    }
+
+    .logo-block {
+        padding-left: 0.5rem;
+    }
+
+    .logo-title {
+        font-size: 0.9rem;
+    }
+
+    .logo-subtitle {
+        font-size: 0.65rem;
     }
 
     .mobile-menu-btn {
@@ -402,13 +487,16 @@ a {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 65px;
+        top: 60px;
         left: 0;
         width: 100%;
         background-color: #ffffff;
         border-bottom: 2px solid #0d1b4b;
         height: auto;
-        padding-bottom: 1rem;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+        padding: 0.5rem 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .nav-links.active {
@@ -418,11 +506,28 @@ a {
     .nav-item {
         width: 100%;
         height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .nav-link {
-        padding: 1rem;
+        padding: 1rem 1.5rem;
         width: 100%;
+        height: auto;
+        justify-content: space-between;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.9rem;
+    }
+
+    /* Handing arrow for dropdown on mobile */
+    .nav-item.has-dropdown .nav-link .arrow {
+        transition: transform 0.3s;
+        margin-left: auto;
+    }
+
+    .nav-item.active .nav-link .arrow {
+        transform: rotate(180deg);
     }
 
     .dropdown {
@@ -430,85 +535,626 @@ a {
         display: none;
         width: 100%;
         border: none;
-        background-color: #f9f9f9;
-        padding-left: 1rem;
+        background-color: #f9f9fb;
+        min-width: 100%;
+        padding-left: 0;
+        box-shadow: none;
     }
 
     .nav-item.active .dropdown {
         display: block;
     }
 
-    .page-banner {
-        padding: 0 1rem;
+    .dropdown li a {
+        padding: 0.8rem 2.5rem;
+        font-size: 0.85rem;
+        border-bottom: 1px solid #eee;
     }
 
+    /* PAGE BANNER */
+    .page-banner {
+        height: auto;
+        padding: 2rem 1.25rem;
+    }
+
+    .banner-content h1 {
+        font-size: 1.25rem;
+    }
+
+    .banner-content p {
+        font-size: 0.8rem;
+    }
+
+    /* MAIN LAYOUT */
     .layout-container {
         flex-direction: column;
     }
 
     .main-content {
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 1.25rem;
     }
 
     .sidebar {
         width: 100%;
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 1.25rem;
+        border-top: 1px solid #ddd;
+        background-color: #c8cdd6;
     }
 
-}
+    /* SIDEBAR BLOCKS */
+    .sidebar-section {
+        margin-bottom: 2rem;
+    }
 
+    .sidebar-logos {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .sidebar-photo {
+        margin-top: 2rem;
+    }
+
+    .sidebar-photo img {
+        max-width: 100%;
+        width: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* COMPONENTS RESPONSIVENESS */
+    .benefits-grid, .steuer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+    }
+
+    .steuer-col:first-child {
+        border-right: none !important;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* TIMELINE TABLE */
+    .timeline-table tr {
+        display: flex;
+        flex-direction: column;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .timeline-table td {
+        padding: 0.2rem 0 !important;
+        border-bottom: none !important;
+        width: 100% !important;
+    }
+
+    .timeline-date {
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+        padding-right: 0 !important;
+    }
+
+    /* FOOTER */
+    .main-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .footer-right {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    /* GENERAL ADJUSTMENTS FOR 375PX */
+    .section-heading-band {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .email-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .team-photo {
+        max-width: 100%;
+        height: auto;
+    }
+}
 
 /* ==========================================================================
-   SPA Transitions & Animations
+   MANDANTENBEREICH STYLES (Moved from mandantenbereich.html)
    ========================================================================== */
 
-.page-content-wrapper {
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    opacity: 1;
+/* ── ACCORDION BLOCKS ── */
+.mandanten-block {
+    border: 1px solid #dde2ee;
+    margin-bottom: 1.2rem;
+    background: #fff;
 }
 
-.page-content-wrapper.fade-out {
-    opacity: 0;
-    transform: translateY(10px);
-}
-
-.page-content-wrapper.fade-in {
-    opacity: 0;
-    transform: translateY(-10px);
-}
-
-.loading-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background-color: #0d1b4b;
-    z-index: 9999;
-    transition: width 0.3s ease;
-}
-
-.loading-bar.active {
-    width: 30%;
-}
-
-.loading-bar.complete {
+.mandanten-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #eef0f5;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0d1b4b;
+    border: none;
     width: 100%;
-    opacity: 0;
-    transition: width 0.3s ease, opacity 0.3s ease 0.2s;
+    text-align: left;
+    transition: background 0.2s;
 }
 
-/* Ensure fixed navbar while transitioning */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    z-index: 1001;
+.mandanten-toggle:hover {
+    background: #e2e6f0;
+}
+
+.mandanten-toggle::before {
+    content: '•';
+    color: #0d1b4b;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.mandanten-toggle .toggle-arrow {
+    margin-left: auto;
+    font-size: 0.7rem;
+    color: #666;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.mandanten-toggle.open .toggle-arrow {
+    transform: rotate(180deg);
+}
+
+.mandanten-body {
+    display: none;
+    padding: 1rem 1.2rem 1.2rem;
+}
+
+.mandanten-body.open {
+    display: block;
+}
+
+/* ── MERKBLÄTTER SEARCH ── */
+.merkblatt-search-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 0.35rem 0.7rem;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+}
+
+.merkblatt-search-wrap input {
+    border: none;
+    outline: none;
+    font-size: 0.85rem;
+    flex: 1;
+    color: #555;
+    font-family: inherit;
+    background: transparent;
+}
+
+.merkblatt-search-wrap .s-icon {
+    color: #999;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* ── CATEGORY GROUPS ── */
+.cat-group {
+    margin-bottom: 1.2rem;
+}
+
+.cat-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #0d1b4b;
+    color: #fff;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    border-radius: 2px;
+}
+
+.cat-icon-box {
+    width: 26px;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.cat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cat-list li {
+    padding: 0.25rem 0.3rem;
+    border-bottom: 1px dotted #ddd;
+    font-size: 0.82rem;
+}
+
+.cat-list li:last-child {
+    border-bottom: none;
+}
+
+.cat-list a {
+    color: #1a3a8c;
+    text-decoration: none;
+}
+
+.cat-list a:hover {
+    text-decoration: underline;
+}
+
+.update-tag {
+    color: #888;
+    font-size: 0.75rem;
+    margin-left: 3px;
+}
+
+.cat-list li.m-hidden {
+    display: none;
+}
+
+.more-link {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    color: #1a3a8c;
+    text-decoration: none;
+}
+
+.more-link:hover {
+    text-decoration: underline;
+}
+
+/* ── STEUERTERMINE GRID ── */
+.steuer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid #ddd;
+    padding-top: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.steuer-col {
+    padding: 0 0.8rem;
+}
+
+.steuer-col:first-child {
+    border-right: 1px solid #ddd;
+    padding-left: 0;
+}
+
+.steuer-col h3 {
+    font-size: 0.9rem;
+    color: #0d1b4b;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
     border-bottom: 2px solid #0d1b4b;
+    padding-bottom: 0.2rem;
 }
 
-body {
-    padding-top: 80px; /* Offset for fixed navbar */
+.steuer-entry {
+    margin-bottom: 0.7rem;
+}
+
+.steuer-date-row {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 0.25rem;
+}
+
+.steuer-date {
+    font-weight: 700;
+    font-size: 0.82rem;
+    min-width: 38px;
+    color: #222;
+    flex-shrink: 0;
+}
+
+.steuer-taxes {
+    font-size: 0.8rem;
+    color: #333;
+    line-height: 1.55;
+}
+
+.steuer-note {
+    font-size: 0.75rem;
+    color: #555;
+    background: #f8f8f8;
+    padding: 0.35rem 0.5rem;
+    border-left: 2px solid #ccc;
+    margin-top: 0.3rem;
+    line-height: 1.5;
+}
+
+/* ── NEWS SEARCH BAR ── */
+.news-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.8rem;
+    background: #eef0f5;
+    border-top: 1px solid #dde2ee;
+    border-bottom: 1px solid #dde2ee;
+    margin-bottom: 0.6rem;
+}
+
+.news-filter-bar select {
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    color: #333;
+    font-family: inherit;
+    border-radius: 2px;
+}
+
+.news-filter-bar input {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    background: #fff;
+    border-radius: 2px;
+    outline: none;
+    font-family: inherit;
+    color: #555;
+}
+
+.news-filter-bar .n-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* ── NEWS ITEMS ── */
+.news-item {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-item h4 {
+    font-size: 0.85rem;
+    color: #0d1b4b;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    line-height: 1.4;
+}
+
+.news-item h4 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.news-item h4 a:hover {
+    text-decoration: underline;
+}
+
+.news-date-tag {
+    font-weight: 400;
+    color: #666;
+    font-size: 0.78rem;
+}
+
+.news-item p {
+    font-size: 0.8rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+.news-weiter {
+    color: #1a3a8c;
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+.news-weiter:hover {
+    text-decoration: underline;
+}
+
+.news-item.n-hidden {
+    display: none;
+}
+
+/* ── PAGINATION ── */
+.pagination-row {
+    padding: 0.6rem 0 0.2rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+}
+
+.pagination-row a,
+.pagination-row span {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 0.78rem;
+    color: #1a3a8c;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.pagination-row a:hover {
+    background: #0d1b4b;
+    color: #fff;
+}
+
+.pagination-row .pg-current {
+    background: #0d1b4b;
+    color: #fff;
+    border-color: #0d1b4b;
+}
+
+/* ── DATENSCHUTZ FOOTER LINK ── */
+.ds-footer-link {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+}
+
+.ds-footer-link a {
+    color: #1a3a8c;
+    text-decoration: none;
+}
+
+.ds-footer-link a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   INTERACTIVE UI ENHANCEMENTS
+   ========================================================================== */
+
+/* ── BACK TO TOP BUTTON ── */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: #0d1b4b;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(13, 27, 75, 0.4);
+    border: none;
+    font-size: 1.25rem;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: #1a2a5e;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(13, 27, 75, 0.5);
+}
+
+.back-to-top svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: currentColor;
+}
+
+/* ==========================================================================
+   JOBS PAGE STYLES (wir-stellen-ein.html)
+   ========================================================================== */
+
+.jobs-intro {
+    margin-bottom: 2rem;
+}
+
+.jobs-intro h3 {
+    color: #0d1b4b;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.job-positions {
+    margin-top: 2rem;
+}
+
+.job-item {
+    margin-bottom: 2.5rem;
+}
+
+.job-title {
+    font-weight: 700;
+    color: #0d1b4b;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.job-description {
+    font-size: 0.92rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+.benefits-section {
+    background-color: #e8eaf0;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    border-left: 4px solid #0d1b4b;
+}
+
+.benefits-title {
+    font-weight: 700;
+    color: #0d1b4b;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* ── APPLY CTA ── */
+.apply-cta {
+    margin-top: 3rem;
+    text-align: center;
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.btn-apply {
+    display: inline-block;
+    background-color: #0d1b4b;
+    color: #fff;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s;
+    margin-top: 1rem;
+}
+
+.btn-apply:hover {
+    background-color: #1a2a5e;
 }

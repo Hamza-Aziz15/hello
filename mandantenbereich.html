@@ -1,299 +1,19 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mandantenbereich | Barbara Hermann Steuerberatung GbR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/png" href="fevicon.png">
     <link rel="stylesheet" href="style.css">
-    <style>
 
-        /* ── ACCORDION BLOCKS ── */
-        .mandanten-block {
-            border: 1px solid #dde2ee;
-            margin-bottom: 1.2rem;
-            background: #fff;
-        }
-
-        .mandanten-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            background: #eef0f5;
-            cursor: pointer;
-            user-select: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #0d1b4b;
-            border: none;
-            width: 100%;
-            text-align: left;
-            transition: background 0.2s;
-        }
-        .mandanten-toggle:hover { background: #e2e6f0; }
-        .mandanten-toggle::before {
-            content: '•';
-            color: #0d1b4b;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-        .mandanten-toggle .toggle-arrow {
-            margin-left: auto;
-            font-size: 0.7rem;
-            color: #666;
-            transition: transform 0.25s ease;
-            flex-shrink: 0;
-        }
-        .mandanten-toggle.open .toggle-arrow { transform: rotate(180deg); }
-
-        .mandanten-body {
-            display: none;
-            padding: 1rem 1.2rem 1.2rem;
-        }
-        .mandanten-body.open { display: block; }
-
-        /* ── MERKBLÄTTER SEARCH ── */
-        .merkblatt-search-wrap {
-            display: flex;
-            align-items: center;
-            border: 1px solid #ccc;
-            background: #fff;
-            padding: 0.35rem 0.7rem;
-            margin-bottom: 1rem;
-            gap: 0.5rem;
-        }
-        .merkblatt-search-wrap input {
-            border: none;
-            outline: none;
-            font-size: 0.85rem;
-            flex: 1;
-            color: #555;
-            font-family: inherit;
-            background: transparent;
-        }
-        .merkblatt-search-wrap .s-icon {
-            color: #999;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        /* ── CATEGORY GROUPS ── */
-        .cat-group { margin-bottom: 1.2rem; }
-
-        .cat-header {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: #0d1b4b;
-            color: #fff;
-            padding: 0.5rem 0.8rem;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-            border-radius: 2px;
-        }
-        .cat-icon-box {
-            width: 26px; height: 26px;
-            background: rgba(255,255,255,0.15);
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 2px;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .cat-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .cat-list li {
-            padding: 0.25rem 0.3rem;
-            border-bottom: 1px dotted #ddd;
-            font-size: 0.82rem;
-        }
-        .cat-list li:last-child { border-bottom: none; }
-        .cat-list a {
-            color: #1a3a8c;
-            text-decoration: none;
-        }
-        .cat-list a:hover { text-decoration: underline; }
-        .update-tag {
-            color: #888;
-            font-size: 0.75rem;
-            margin-left: 3px;
-        }
-        .cat-list li.m-hidden { display: none; }
-
-        .more-link {
-            display: inline-block;
-            margin-top: 0.4rem;
-            font-size: 0.8rem;
-            color: #1a3a8c;
-            text-decoration: none;
-        }
-        .more-link:hover { text-decoration: underline; }
-
-        /* ── STEUERTERMINE GRID ── */
-        .steuer-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            border-top: 1px solid #ddd;
-            padding-top: 0.8rem;
-            margin-bottom: 1rem;
-        }
-        .steuer-col { padding: 0 0.8rem; }
-        .steuer-col:first-child { border-right: 1px solid #ddd; padding-left: 0; }
-        .steuer-col h3 {
-            font-size: 0.9rem;
-            color: #0d1b4b;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-            border-bottom: 2px solid #0d1b4b;
-            padding-bottom: 0.2rem;
-        }
-        .steuer-entry { margin-bottom: 0.7rem; }
-        .steuer-date-row {
-            display: flex;
-            gap: 0.6rem;
-            margin-bottom: 0.25rem;
-        }
-        .steuer-date {
-            font-weight: 700;
-            font-size: 0.82rem;
-            min-width: 38px;
-            color: #222;
-            flex-shrink: 0;
-        }
-        .steuer-taxes {
-            font-size: 0.8rem;
-            color: #333;
-            line-height: 1.55;
-        }
-        .steuer-note {
-            font-size: 0.75rem;
-            color: #555;
-            background: #f8f8f8;
-            padding: 0.35rem 0.5rem;
-            border-left: 2px solid #ccc;
-            margin-top: 0.3rem;
-            line-height: 1.5;
-        }
-
-        /* ── NEWS SEARCH BAR ── */
-        .news-filter-bar {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.5rem 0.8rem;
-            background: #eef0f5;
-            border-top: 1px solid #dde2ee;
-            border-bottom: 1px solid #dde2ee;
-            margin-bottom: 0.6rem;
-        }
-        .news-filter-bar select {
-            border: 1px solid #ccc;
-            background: #fff;
-            padding: 0.3rem 0.5rem;
-            font-size: 0.8rem;
-            color: #333;
-            font-family: inherit;
-            border-radius: 2px;
-        }
-        .news-filter-bar input {
-            flex: 1;
-            border: 1px solid #ccc;
-            padding: 0.3rem 0.6rem;
-            font-size: 0.8rem;
-            background: #fff;
-            border-radius: 2px;
-            outline: none;
-            font-family: inherit;
-            color: #555;
-        }
-        .news-filter-bar .n-search-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* ── NEWS ITEMS ── */
-        .news-item {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid #eee;
-        }
-        .news-item:last-child { border-bottom: none; }
-        .news-item h4 {
-            font-size: 0.85rem;
-            color: #0d1b4b;
-            font-weight: 700;
-            margin-bottom: 0.35rem;
-            line-height: 1.4;
-        }
-        .news-item h4 a {
-            color: inherit;
-            text-decoration: none;
-        }
-        .news-item h4 a:hover { text-decoration: underline; }
-        .news-date-tag {
-            font-weight: 400;
-            color: #666;
-            font-size: 0.78rem;
-        }
-        .news-item p {
-            font-size: 0.8rem;
-            color: #444;
-            line-height: 1.6;
-        }
-        .news-weiter {
-            color: #1a3a8c;
-            text-decoration: none;
-            font-size: 0.8rem;
-        }
-        .news-weiter:hover { text-decoration: underline; }
-        .news-item.n-hidden { display: none; }
-
-        /* ── PAGINATION ── */
-        .pagination-row {
-            padding: 0.6rem 0 0.2rem;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 3px;
-            flex-wrap: wrap;
-        }
-        .pagination-row a,
-        .pagination-row span {
-            display: inline-block;
-            padding: 2px 7px;
-            font-size: 0.78rem;
-            color: #1a3a8c;
-            text-decoration: none;
-            border: 1px solid #ddd;
-            background: #fff;
-        }
-        .pagination-row a:hover { background: #0d1b4b; color: #fff; }
-        .pagination-row .pg-current { background: #0d1b4b; color: #fff; border-color: #0d1b4b; }
-
-        /* ── DATENSCHUTZ FOOTER LINK ── */
-        .ds-footer-link {
-            margin-top: 0.6rem;
-            font-size: 0.8rem;
-        }
-        .ds-footer-link a { color: #1a3a8c; text-decoration: none; }
-        .ds-footer-link a:hover { text-decoration: underline; }
-
-        @media (max-width: 640px) {
-            .steuer-grid { grid-template-columns: 1fr; }
-            .steuer-col:first-child { border-right: none; border-bottom: 1px solid #ddd; padding-bottom: 0.8rem; }
-        }
-    </style>
 </head>
+
 <body>
 
     <!-- NAVBAR -->
@@ -366,7 +86,8 @@
                 <p>und dem Wirtschaftsrecht</p>
                 <br>
                 <p>von Fachverlagen</p>
-                <p style="color:#666; font-style:italic;">für die Vollständigkeit und Richtigkeit kann keine persönliche Verantwortung übernommen werden.</p>
+                <p style="color:#666; font-style:italic;">für die Vollständigkeit und Richtigkeit kann keine persönliche
+                    Verantwortung übernommen werden.</p>
             </div>
 
             <!-- ════════════════════════════════════════
@@ -392,14 +113,18 @@
                             Alle Steuerzahler
                         </div>
                         <ul class="cat-list">
-                            <li><a href="#">Belege für die Einkommensteuerberatung 2025</a><span class="update-tag">[Update]</span></li>
+                            <li><a href="#">Belege für die Einkommensteuerberatung 2025</a><span
+                                    class="update-tag">[Update]</span></li>
                             <li><a href="#">Influencer und Steuern</a></li>
                             <li><a href="#">Vereine</a><span class="update-tag">[Update]</span></li>
-                            <li><a href="#">Abgrenzung von Herstellungs- und Erhaltungskosten</a><span class="update-tag">[Update]</span></li>
-                            <li><a href="#">Außergewöhnliche Belastungen</a><span class="update-tag">[Update]</span></li>
+                            <li><a href="#">Abgrenzung von Herstellungs- und Erhaltungskosten</a><span
+                                    class="update-tag">[Update]</span></li>
+                            <li><a href="#">Außergewöhnliche Belastungen</a><span class="update-tag">[Update]</span>
+                            </li>
                             <li><a href="#">Beratungscheck</a></li>
                             <li><a href="#">Berliner Testament</a></li>
-                            <li><a href="#">Besteuerung der Rentner und Pensionäre</a><span class="update-tag">[Update]</span></li>
+                            <li><a href="#">Besteuerung der Rentner und Pensionäre</a><span
+                                    class="update-tag">[Update]</span></li>
                             <li><a href="#">Besteuerungsverfahren</a></li>
                             <li><a href="#">Eingetragene Lebenspartner</a></li>
                             <li><a href="#">Elektronische Übermittlung von Steuererklärungen</a></li>
@@ -433,8 +158,10 @@
                         </div>
                         <ul class="cat-list">
                             <li><a href="#">Aktivrente</a><span class="update-tag">[Update]</span></li>
-                            <li><a href="#">Steuergünstige Gehaltszuwendungen</a><span class="update-tag">[Update]</span></li>
-                            <li><a href="#">Fahrzeugnutzung durch Arbeitnehmer</a><span class="update-tag">[Update]</span></li>
+                            <li><a href="#">Steuergünstige Gehaltszuwendungen</a><span
+                                    class="update-tag">[Update]</span></li>
+                            <li><a href="#">Fahrzeugnutzung durch Arbeitnehmer</a><span
+                                    class="update-tag">[Update]</span></li>
                         </ul>
                         <a href="#" class="more-link">Weitere Merkblätter und Checklisten »</a>
                     </div>
@@ -446,7 +173,8 @@
                             Hausbesitzer
                         </div>
                         <ul class="cat-list">
-                            <li><a href="#">Abgrenzung von Herstellungs- und Erhaltungskosten</a><span class="update-tag">[Update]</span></li>
+                            <li><a href="#">Abgrenzung von Herstellungs- und Erhaltungskosten</a><span
+                                    class="update-tag">[Update]</span></li>
                             <li><a href="#">Hausbesitzer</a></li>
                             <li><a href="#">Photovoltaikanlagen</a></li>
                         </ul>
@@ -475,7 +203,8 @@
                         </div>
                         <ul class="cat-list">
                             <li><a href="#">Ermäßigter Umsatzsteuersatz</a><span class="update-tag">[Update]</span></li>
-                            <li><a href="#">Vermögensverwaltende vs. gewerbliche Personengesellschaft</a><span class="update-tag">[Update]</span></li>
+                            <li><a href="#">Vermögensverwaltende vs. gewerbliche Personengesellschaft</a><span
+                                    class="update-tag">[Update]</span></li>
                             <li><a href="#">Abgabe von Speisen und Getränken ab 2026</a></li>
                         </ul>
                         <a href="#" class="more-link">Weitere Merkblätter und Checklisten »</a>
@@ -512,7 +241,8 @@
                                     </div>
                                 </div>
                                 <div class="steuer-note">
-                                    Zahlungsschonfrist: bis zum 13.04.2026. Diese Schonfrist gilt nicht bei Barzahlungen und Zahlungen per Scheck. [* bei monatlicher Abführung für März 2026]
+                                    Zahlungsschonfrist: bis zum 13.04.2026. Diese Schonfrist gilt nicht bei Barzahlungen
+                                    und Zahlungen per Scheck. [* bei monatlicher Abführung für März 2026]
                                 </div>
                             </div>
                         </div>
@@ -538,7 +268,9 @@
                                     </div>
                                 </div>
                                 <div class="steuer-note">
-                                    Zahlungsschonfrist: bis zum 15.05. bzw. 18.05.2026. Diese Schonfrist gilt nicht bei Barzahlungen und Zahlungen per Scheck. [* bei monatlicher Abführung für April 2026; ** Vierteljahresrate an die Gemeinde]
+                                    Zahlungsschonfrist: bis zum 15.05. bzw. 18.05.2026. Diese Schonfrist gilt nicht bei
+                                    Barzahlungen und Zahlungen per Scheck. [* bei monatlicher Abführung für April 2026;
+                                    ** Vierteljahresrate an die Gemeinde]
                                 </div>
                             </div>
                         </div>
@@ -559,54 +291,109 @@
                     <!-- News articles -->
                     <div id="newsList">
 
-                        <div class="news-item" data-text="fehlender prozessbeteiligter mündliche verhandlung entscheidungserheblichen vortrag">
-                            <h4><a href="#">Fehlender Prozessbeteiligter: Mündliche Verhandlung muss bei neuem entscheidungserheblichen Vortrag vertagt werden</a> <span class="news-date-tag">(Mittwoch, 01.04.2026)</span></h4>
-                            <p>Es ist vor Gericht wie so oft im Leben: Reden hilft. So bringt eine mündliche Verhandlung häufig Bewegung in einen Prozess. Sie dient der persönlichen Anhörung der Beteiligten, der Erörterung des Sachverhalts, der Beweisaufnahme und der … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="fehlender prozessbeteiligter mündliche verhandlung entscheidungserheblichen vortrag">
+                            <h4><a href="#">Fehlender Prozessbeteiligter: Mündliche Verhandlung muss bei neuem
+                                    entscheidungserheblichen Vortrag vertagt werden</a> <span
+                                    class="news-date-tag">(Mittwoch, 01.04.2026)</span></h4>
+                            <p>Es ist vor Gericht wie so oft im Leben: Reden hilft. So bringt eine mündliche Verhandlung
+                                häufig Bewegung in einen Prozess. Sie dient der persönlichen Anhörung der Beteiligten,
+                                der Erörterung des Sachverhalts, der Beweisaufnahme und der … <a href="#"
+                                    class="news-weiter">weiter</a></p>
                         </div>
 
-                        <div class="news-item" data-text="staatliche neuverschuldung schuldenuhr steuerzahlerbund sekunde 6918">
-                            <h4><a href="#">Staatliche Neuverschuldung: Schuldenuhr des Steuerzahlerbundes beschleunigt auf 6.918 EUR pro Sekunde</a> <span class="news-date-tag">(Mittwoch, 01.04.2026)</span></h4>
-                            <p>Die wachsende Staatsverschuldung in Deutschland wird seit Jahren vom Bund der Steuerzahler (BdSt) plakativ auf einer Schuldenuhr dargestellt. Aufgrund der gestiegenen Staatsschulden tickt die Uhr seit Anfang 2026 wieder deutlich schneller: Von … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="staatliche neuverschuldung schuldenuhr steuerzahlerbund sekunde 6918">
+                            <h4><a href="#">Staatliche Neuverschuldung: Schuldenuhr des Steuerzahlerbundes beschleunigt
+                                    auf 6.918 EUR pro Sekunde</a> <span class="news-date-tag">(Mittwoch,
+                                    01.04.2026)</span></h4>
+                            <p>Die wachsende Staatsverschuldung in Deutschland wird seit Jahren vom Bund der
+                                Steuerzahler (BdSt) plakativ auf einer Schuldenuhr dargestellt. Aufgrund der gestiegenen
+                                Staatsschulden tickt die Uhr seit Anfang 2026 wieder deutlich schneller: Von … <a
+                                    href="#" class="news-weiter">weiter</a></p>
                         </div>
 
-                        <div class="news-item" data-text="kinderbetreuungskosten sonderausgabenabzug haushaltszugehörigkeit kind kindergarten babysitter 4800">
-                            <h4><a href="#">Kinderbetreuungskosten: Sonderausgabenabzug darf an Haushaltszugehörigkeit des Kinds geknüpft werden</a> <span class="news-date-tag">(Dienstag, 31.03.2026)</span></h4>
-                            <p>Ob Kindergarten, Babysitter, Hort oder Tagesmutter: Kosten für die Betreuung der eigenen Kinder können in der Einkommensteuererklärung als Sonderausgaben abgesetzt werden. Seit 2025 lassen sich 80 % der Kinderbetreuungskosten, maximal 4.800 EUR … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="kinderbetreuungskosten sonderausgabenabzug haushaltszugehörigkeit kind kindergarten babysitter 4800">
+                            <h4><a href="#">Kinderbetreuungskosten: Sonderausgabenabzug darf an Haushaltszugehörigkeit
+                                    des Kinds geknüpft werden</a> <span class="news-date-tag">(Dienstag,
+                                    31.03.2026)</span></h4>
+                            <p>Ob Kindergarten, Babysitter, Hort oder Tagesmutter: Kosten für die Betreuung der eigenen
+                                Kinder können in der Einkommensteuererklärung als Sonderausgaben abgesetzt werden. Seit
+                                2025 lassen sich 80 % der Kinderbetreuungskosten, maximal 4.800 EUR … <a href="#"
+                                    class="news-weiter">weiter</a></p>
                         </div>
 
-                        <div class="news-item" data-text="umsatzsteuer restaurant verpflegungsdienstleistungen 7 prozent cafes kantinen kitas 2026">
-                            <h4><a href="#">Weitere Klärung zur Umsatzsteuer: Restaurant- und Verpflegungsdienstleistungen ab 01.01.2026</a> <span class="news-date-tag">(Montag, 30.03.2026)</span></h4>
-                            <p>Seit dem 01.01.2026 gilt in Deutschland der ermäßigte Umsatzsteuersatz von 7 % für Speisen in Restaurants, Cafes, Kantinen, Imbissbetrieben, im Catering sowie in Schulen und Kitas. Nur Getränke werden weiterhin mit 19 % besteuert. Die … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="umsatzsteuer restaurant verpflegungsdienstleistungen 7 prozent cafes kantinen kitas 2026">
+                            <h4><a href="#">Weitere Klärung zur Umsatzsteuer: Restaurant- und
+                                    Verpflegungsdienstleistungen ab 01.01.2026</a> <span class="news-date-tag">(Montag,
+                                    30.03.2026)</span></h4>
+                            <p>Seit dem 01.01.2026 gilt in Deutschland der ermäßigte Umsatzsteuersatz von 7 % für
+                                Speisen in Restaurants, Cafes, Kantinen, Imbissbetrieben, im Catering sowie in Schulen
+                                und Kitas. Nur Getränke werden weiterhin mit 19 % besteuert. Die … <a href="#"
+                                    class="news-weiter">weiter</a></p>
                         </div>
 
-                        <div class="news-item" data-text="neue vordrucke umsatzsteuer voranmeldungs vorauszahlungsverfahren 2026 bmf">
-                            <h4><a href="#">Neue Vordrucke: Umsatzsteuer-Voranmeldungs- und -Vorauszahlungsverfahren 2026</a> <span class="news-date-tag">(Sonntag, 29.03.2026)</span></h4>
-                            <p>Ab Januar 2026 gelten neue Vordrucke für das Umsatzsteuer-Voranmeldungs- und -Vorauszahlungsverfahren. Das Bundesfinanzministerium (BMF) hat die amtlichen Muster mit Schreiben vom 29.12.2025 veröffentlicht. … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="neue vordrucke umsatzsteuer voranmeldungs vorauszahlungsverfahren 2026 bmf">
+                            <h4><a href="#">Neue Vordrucke: Umsatzsteuer-Voranmeldungs- und -Vorauszahlungsverfahren
+                                    2026</a> <span class="news-date-tag">(Sonntag, 29.03.2026)</span></h4>
+                            <p>Ab Januar 2026 gelten neue Vordrucke für das Umsatzsteuer-Voranmeldungs- und
+                                -Vorauszahlungsverfahren. Das Bundesfinanzministerium (BMF) hat die amtlichen Muster mit
+                                Schreiben vom 29.12.2025 veröffentlicht. … <a href="#" class="news-weiter">weiter</a>
+                            </p>
                         </div>
 
-                        <div class="news-item" data-text="dienstwagen 1 prozent vorteil arbeitnehmer stellplatzkosten gegengerechnet">
-                            <h4><a href="#">1-%-Vorteil aus Dienstwagennutzung: Vom Arbeitnehmer getragene Stellplatzkosten dürfen nicht gegengerechnet werden</a> <span class="news-date-tag">(Samstag, 28.03.2026)</span></h4>
-                            <p>Dürfen Arbeitnehmer ihren Dienstwagen auch für private Zwecke nutzen, versteuern sie diesen geldwerten Vorteil häufig nach der sog. 1-%-Regelung. Sofern sie sich selbst an den Kosten des Dienstwagens beteiligen … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="dienstwagen 1 prozent vorteil arbeitnehmer stellplatzkosten gegengerechnet">
+                            <h4><a href="#">1-%-Vorteil aus Dienstwagennutzung: Vom Arbeitnehmer getragene
+                                    Stellplatzkosten dürfen nicht gegengerechnet werden</a> <span
+                                    class="news-date-tag">(Samstag, 28.03.2026)</span></h4>
+                            <p>Dürfen Arbeitnehmer ihren Dienstwagen auch für private Zwecke nutzen, versteuern sie
+                                diesen geldwerten Vorteil häufig nach der sog. 1-%-Regelung. Sofern sie sich selbst an
+                                den Kosten des Dienstwagens beteiligen … <a href="#" class="news-weiter">weiter</a></p>
                         </div>
 
-                        <div class="news-item" data-text="passfoto amt keine umsatzsteuer biometrische aufnahmen mecklenburg vorpommern finanzministerium">
-                            <h4><a href="#">Passfoto vom Amt: Keine Umsatzsteuer auf biometrische Aufnahmen</a> <span class="news-date-tag">(Donnerstag, 26.03.2026)</span></h4>
-                            <p>Wer Passfotos im Amt machen lässt, zahlt lediglich eine Gebühr, keine Umsatzsteuer. Das Finanzministerium Mecklenburg-Vorpommern hat mit Erlass vom 16.10.2025 klargestellt, dass die Anfertigung biometrischer Lichtbilder durch Behörden steuerfrei … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="passfoto amt keine umsatzsteuer biometrische aufnahmen mecklenburg vorpommern finanzministerium">
+                            <h4><a href="#">Passfoto vom Amt: Keine Umsatzsteuer auf biometrische Aufnahmen</a> <span
+                                    class="news-date-tag">(Donnerstag, 26.03.2026)</span></h4>
+                            <p>Wer Passfotos im Amt machen lässt, zahlt lediglich eine Gebühr, keine Umsatzsteuer. Das
+                                Finanzministerium Mecklenburg-Vorpommern hat mit Erlass vom 16.10.2025 klargestellt,
+                                dass die Anfertigung biometrischer Lichtbilder durch Behörden steuerfrei … <a href="#"
+                                    class="news-weiter">weiter</a></p>
                         </div>
 
-                        <div class="news-item" data-text="doppelte haushaltsführung ausland unterkunftskosten 2000 euro monat absetzbar 2026">
-                            <h4><a href="#">Doppelte Haushaltsführung im Ausland: Ab 2026 sind Unterkunftskosten bis max. 2.000 EUR pro Monat absetzbar</a> <span class="news-date-tag">(Mittwoch, 25.03.2026)</span></h4>
-                            <p>Arbeitnehmer, die aus beruflichen Gründen einen doppelten Haushalt im Inland unterhalten, dürfen die Kosten für ihre Zweitwohnung nur mit max. 1.000 EUR pro Monat als Werbungskosten abziehen. Für Zweitwohnungen im Ausland galt bislang keine … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="doppelte haushaltsführung ausland unterkunftskosten 2000 euro monat absetzbar 2026">
+                            <h4><a href="#">Doppelte Haushaltsführung im Ausland: Ab 2026 sind Unterkunftskosten bis
+                                    max. 2.000 EUR pro Monat absetzbar</a> <span class="news-date-tag">(Mittwoch,
+                                    25.03.2026)</span></h4>
+                            <p>Arbeitnehmer, die aus beruflichen Gründen einen doppelten Haushalt im Inland unterhalten,
+                                dürfen die Kosten für ihre Zweitwohnung nur mit max. 1.000 EUR pro Monat als
+                                Werbungskosten abziehen. Für Zweitwohnungen im Ausland galt bislang keine … <a href="#"
+                                    class="news-weiter">weiter</a></p>
                         </div>
 
-                        <div class="news-item" data-text="zuständigkeit umsatzbesteuerung ungarischer unternehmer finanzamt nürnberg 2026">
-                            <h4><a href="#">Aktuelle Änderungen der Zuständigkeit: Umsatzbesteuerung ungarischer Unternehmer</a> <span class="news-date-tag">(Dienstag, 24.03.2026)</span></h4>
-                            <p>Ein zentraler Ansprechpartner für ungarische Unternehmer in Deutschland wurde neu bestimmt: Zum 01.01.2026 hat das Finanzamt Nürnberg die Betreuung in umsatzsteuerlichen Angelegenheiten übernommen. … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="zuständigkeit umsatzbesteuerung ungarischer unternehmer finanzamt nürnberg 2026">
+                            <h4><a href="#">Aktuelle Änderungen der Zuständigkeit: Umsatzbesteuerung ungarischer
+                                    Unternehmer</a> <span class="news-date-tag">(Dienstag, 24.03.2026)</span></h4>
+                            <p>Ein zentraler Ansprechpartner für ungarische Unternehmer in Deutschland wurde neu
+                                bestimmt: Zum 01.01.2026 hat das Finanzamt Nürnberg die Betreuung in umsatzsteuerlichen
+                                Angelegenheiten übernommen. … <a href="#" class="news-weiter">weiter</a></p>
                         </div>
 
-                        <div class="news-item" data-text="digitale bekanntgabe steuerbescheide widerspruch 2026 nicht erforderlich 2027">
-                            <h4><a href="#">Digitale Bekanntgabe von Steuerbescheiden: Widerspruch ist für 2026 noch nicht erforderlich</a> <span class="news-date-tag">(Dienstag, 24.03.2026)</span></h4>
-                            <p>Nach den ursprünglichen Planungen des Gesetzgebers sollten elektronische Steuerbescheide bereits ab dem 01.01.2026 zur Regel und sollte Papier die Ausnahme werden. Nun wurden die Neuregelungen jedoch erst ab dem 01.01.2027 beschlossen, so dass … <a href="#" class="news-weiter">weiter</a></p>
+                        <div class="news-item"
+                            data-text="digitale bekanntgabe steuerbescheide widerspruch 2026 nicht erforderlich 2027">
+                            <h4><a href="#">Digitale Bekanntgabe von Steuerbescheiden: Widerspruch ist für 2026 noch
+                                    nicht erforderlich</a> <span class="news-date-tag">(Dienstag, 24.03.2026)</span>
+                            </h4>
+                            <p>Nach den ursprünglichen Planungen des Gesetzgebers sollten elektronische Steuerbescheide
+                                bereits ab dem 01.01.2026 zur Regel und sollte Papier die Ausnahme werden. Nun wurden
+                                die Neuregelungen jedoch erst ab dem 01.01.2027 beschlossen, so dass … <a href="#"
+                                    class="news-weiter">weiter</a></p>
                         </div>
 
                     </div><!-- /#newsList -->
@@ -657,7 +444,8 @@
                 <img src="datev.png" alt="DATEV Mitglied">
                 <img src="stbv.png" alt="StBV Hessen">
                 <img src="stbk.png" alt="StBK Hessen">
-                <p style="font-size: 0.74rem; color: #555; text-align: center; margin-top: 0.5rem;">Mitglied des Steuerberaterverbands Hessen</p>
+                <p style="font-size: 0.74rem; color: #555; text-align: center; margin-top: 0.5rem;">Mitglied des
+                    Steuerberaterverbands Hessen</p>
             </div>
         </aside>
 
@@ -702,4 +490,5 @@
         }
     </script>
 </body>
+
 </html>
